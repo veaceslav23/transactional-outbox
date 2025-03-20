@@ -41,5 +41,11 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.14.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.transactional.outbox.pattern</groupId>
+            <artifactId>application</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>
