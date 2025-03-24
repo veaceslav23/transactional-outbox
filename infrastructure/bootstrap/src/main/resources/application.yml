@@ -1,7 +1,6 @@
 spring:
   application:
     name: TransactionalOutboxApp
-
   datasource:
     url: jdbc:postgresql://localhost:5431/postgres
     username: postgres
@@ -13,10 +12,21 @@ spring:
     user: ${POSTGRESQL_MIGRATION_USERNAME:postgres}
     password: ${POSTGRESQL_MIGRATION_PASSWORD:postgres}
     validateMigrationNaming: true
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5671}
+    vhost: /
+    username: ${RABBITMQ_USER:admin}
+    password: ${RABBITMQ_PASSWORD:admin123}
+    analyticsExchange: ${RABBITMQ_ANALYTICS_EXCHANGE:orders.events}
 
 logging:
   level:
     root: info
+    org.springframework.amqp: trace
     com:
       zaxxer:
         hikari: trace
+
+server:
+  port: 8080
