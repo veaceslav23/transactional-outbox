@@ -1,42 +1,39 @@
 package com.transactional.outbox.pattern.entity;
 
-import com.transactional.outbox.pattern.converter.PropertiesJsonConverter;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnTransformer;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-import java.util.Map;
+import java.util.List;
 import java.util.UUID;
 
-@Entity
-@Table(name = "t_outbox")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OutboxEntity {
+@Entity
+@Table(name = "t_order")
+public class OrderEntity {
 
     @Id
     @GeneratedValue
     private UUID id;
 
-    @Column(name = "event", nullable = false)
-    @Convert(converter = PropertiesJsonConverter.class)
-    @ColumnTransformer(write = "?::jsonb")
-    private Map<String, Object> event;
+    @Column
+    private BigDecimal totalPrice;
 
     @Column
     private ZonedDateTime createdAt;
-
-    @Column
-    private String status;
 }
