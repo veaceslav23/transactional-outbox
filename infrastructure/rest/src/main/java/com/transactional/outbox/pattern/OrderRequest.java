@@ -1,10 +1,12 @@
 package com.transactional.outbox.pattern;
 
 import com.transactional.outbox.pattern.domain.model.Order;
+import com.transactional.outbox.pattern.domain.model.Product;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -12,12 +14,18 @@ import java.util.List;
 public class OrderRequest {
 
     private List<ProductRequest> item;
-    private BigDecimal price;
 
     public Order toOrder() {
+        List<Product> result = new ArrayList<>();
+        BigDecimal totalPrice = BigDecimal.ZERO;
+
+        for (ProductRequest request : item) {
+            result.add(request.toProduct());
+            totalPrice = request.getPrice().add(totalPrice);
+        }
         return Order.builder()
-                .product(item.stream().map(ProductRequest::toProduct).toList())
-                .price(price)
+                .product(result)
+                .price(totalPrice)
                 .build();
     }
 }

@@ -1,9 +1,14 @@
 package com.transactional.outbox.pattern;
 
 
+import com.transactional.outbox.pattern.messaging.config.RabbitMQConfigProps;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
+@EnableRabbit
+@EnableConfigurationProperties(RabbitMQConfigProps.class)
 @SpringBootApplication
 public class TransactionalOutboxApplication {
 

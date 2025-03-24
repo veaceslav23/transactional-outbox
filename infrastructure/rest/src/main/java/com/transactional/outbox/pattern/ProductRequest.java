@@ -7,17 +7,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductRequest {
 
+    private UUID uuid;
     private String name;
     private String category;
     private BigDecimal price;
 
     public Product toProduct() {
-        return new Product(name, Category.valueOf(category), price);
+        return new Product(uuid, name, Category.valueOf(category), price);
     }
 }
