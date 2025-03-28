@@ -1,7 +1,7 @@
 package com.transactional.outbox.pattern.resource;
 
 import com.transactional.outbox.pattern.OrderRequest;
-import com.transactional.outbox.pattern.domain.CreateOrderUseCase;
+import com.transactional.outbox.pattern.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class OrderResource {
 
-    private final CreateOrderUseCase createOrderUseCase;
+    private final OrderService orderService;
 
     @PostMapping("/orders")
     public ResponseEntity<String> orders(@RequestBody OrderRequest orderRequest) {
-        var oderId = createOrderUseCase.createOrder(orderRequest.toOrder());
+        var oderId = orderService.createOrder(orderRequest.toOrder());
         return ResponseEntity.ok(oderId.toString());
     }
 }

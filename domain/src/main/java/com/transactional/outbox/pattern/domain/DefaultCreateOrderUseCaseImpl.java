@@ -1,5 +1,6 @@
 package com.transactional.outbox.pattern.domain;
 
+import com.transactional.outbox.pattern.domain.model.Event;
 import com.transactional.outbox.pattern.domain.model.EventStatus;
 import com.transactional.outbox.pattern.domain.model.Order;
 import com.transactional.outbox.pattern.domain.port.Analytics;
@@ -23,12 +24,14 @@ public class DefaultCreateOrderUseCaseImpl implements CreateOrderUseCase {
     @Override
     public UUID createOrder(Order order) {
         var orderId = orders.saveOrder(order);
+        var event = new Event();
+        event.setId(UUID.randomUUID());
+        event.setOrder(order);
         try {
-            analytics.sendAnalytics(order);
-            outbox.saveEvent(order, EventStatus.SUCCESS);
+            analytics.sendAnalytics(event);
+            outbox.saveEvent(event, EventStatus.SUCCESS);
         } catch (Exception e) {
-            outbox.saveEvent(order, EventStatus.FAILED);
-            throw e;
+            outbox.saveEvent(event, EventStatus.FAILED);
         }
         return orderId;
     }
