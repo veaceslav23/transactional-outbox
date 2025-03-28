@@ -4,7 +4,7 @@ spring:
   application:
     name: TransactionalOutboxApp
   datasource:
-    url: jdbc:postgresql://localhost:5431/postgres
+    url: ${DB_URL:jdbc:postgresql://localhost:5431/postgres}
     username: postgres
     password: postgres
   flyway:
