@@ -27,8 +27,10 @@ public class RabbitMQConfig {
 
     @Bean
     @ConditionalOnBean(CachingConnectionFactory.class)
-    RabbitTemplate rabbitTemplate(CachingConnectionFactory connectionFactory) {
-        return new RabbitTemplate(connectionFactory);
+    RabbitTemplate rabbitTemplate(CachingConnectionFactory connectionFactory, Jackson2JsonMessageConverter jsonMessageConverter) {
+        RabbitTemplate template = new RabbitTemplate(connectionFactory);
+        template.setMessageConverter(jsonMessageConverter);
+        return template;
     }
 
     @Bean

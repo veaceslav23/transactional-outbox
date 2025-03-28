@@ -13,4 +13,12 @@ public class Order implements Serializable {
 
     private List<Product> product;
     private BigDecimal price;
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "product=" + product +
+                ", price=" + price +
+                '}';
+    }
 }
