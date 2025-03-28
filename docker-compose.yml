@@ -1,6 +1,6 @@
 services:
   postgresql:
-    image: postgres:16
+    image: registry.maib.md/postgres:16
     container_name: postgres_db
     ports:
       - "5431:5432"
@@ -12,7 +12,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   rabbitmq:
-    image: rabbitmq:3.11.23-management-alpine
+    image: registry.maib.md/rabbitmq:3.11.23-management-alpine
     container_name: rabbit-mq
     ports:
       - "5671:5672"
@@ -24,6 +24,16 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
       - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
       - ./definitions.json:/etc/rabbitmq/definitions.json
+
+  transactional-outbox-app:
+    image: transactional-outbox-app
+    container_name: transactional-outbox-app
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:postgresql://postgresql:5432/postgres
+      RABBITMQ_PORT: 5672
+      RABBITMQ_HOST: rabbitmq
 
 volumes:
   rabbitmq_data:
