@@ -1,4 +1,6 @@
 spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
   application:
     name: TransactionalOutboxApp
   datasource:
@@ -15,10 +17,21 @@ spring:
   rabbitmq:
     host: ${RABBITMQ_HOST:localhost}
     port: ${RABBITMQ_PORT:5671}
-    vhost: /
+    vhost: analytic
     username: ${RABBITMQ_USER:admin}
     password: ${RABBITMQ_PASSWORD:admin123}
     analyticsExchange: ${RABBITMQ_ANALYTICS_EXCHANGE:orders.events}
+    listener:
+      queue: orders.events.analytics
+      type: direct
+      direct:
+        consumers-per-queue: 1
+        retry:
+          enabled: true
+          max-attempts: 2
+        observation-enabled: true
+        missing-queues-fatal: true
+        default-requeue-rejected: false
 
 logging:
   level:

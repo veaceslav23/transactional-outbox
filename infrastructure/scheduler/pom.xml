@@ -10,15 +10,12 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>rest</artifactId>
-
-    <properties>
-    </properties>
+    <artifactId>scheduler</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
             <groupId>com.transactional.outbox.pattern</groupId>
@@ -26,11 +23,6 @@
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>com.transactional.outbox.pattern</groupId>
-            <artifactId>application</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
+
 </project>
