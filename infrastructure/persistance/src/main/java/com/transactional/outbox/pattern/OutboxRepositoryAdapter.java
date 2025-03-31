@@ -9,6 +9,7 @@ import com.transactional.outbox.pattern.entity.OutboxEntity;
 import com.transactional.outbox.pattern.entity.OutboxStatus;
 import com.transactional.outbox.pattern.repository.OutboxRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OutboxRepositoryAdapter implements Outbox {
@@ -55,5 +57,4 @@ public class OutboxRepositoryAdapter implements Outbox {
                 .map(outboxEntity -> new Event(outboxEntity.getId(), objectMapper.convertValue(outboxEntity.getEvent(), Order.class)))
                 .toList();
     }
-
 }
