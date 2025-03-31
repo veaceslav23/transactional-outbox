@@ -2,7 +2,6 @@ package com.transactional.outbox.pattern.domain.port;
 
 import com.transactional.outbox.pattern.domain.model.Event;
 import com.transactional.outbox.pattern.domain.model.EventStatus;
-import com.transactional.outbox.pattern.domain.model.Order;
 
 import java.util.List;
 
