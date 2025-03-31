@@ -1,9 +1,11 @@
 package com.transactional.outbox.pattern.domain.port;
 
 import com.transactional.outbox.pattern.domain.model.Event;
-import com.transactional.outbox.pattern.domain.model.Order;
+
+import java.util.List;
+import java.util.UUID;
 
 public interface Analytics {
 
-    void sendAnalytics(Event event);
+    List<UUID> sendAnalytics(Event event);
 }
