@@ -1,4 +1,4 @@
-package com.transactional.outbox.pattern.messaging.config;
+package com.transactional.outbox.pattern.messaging.rabbitmq.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;

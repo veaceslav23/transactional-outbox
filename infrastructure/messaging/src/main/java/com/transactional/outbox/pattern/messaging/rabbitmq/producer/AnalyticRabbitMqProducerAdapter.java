@@ -1,4 +1,4 @@
-package com.transactional.outbox.pattern.messaging.producer;
+package com.transactional.outbox.pattern.messaging.rabbitmq.producer;
 
 import com.transactional.outbox.pattern.domain.model.Event;
 import com.transactional.outbox.pattern.domain.port.Analytics;
