@@ -1,9 +1,8 @@
-package com.transactional.outbox.pattern.messaging.consumer;
+package com.transactional.outbox.pattern.messaging.rabbitmq.consumer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.transactional.outbox.pattern.domain.UpsertAnalyticUseCase;
 import com.transactional.outbox.pattern.domain.model.Event;
-import com.transactional.outbox.pattern.domain.port.Outbox;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
