@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -35,4 +36,10 @@ public class AnalyticEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "id", name = "product_id")
     private ProductEntity product;
+
+    @Column
+    private LocalDate date;
+
+    @Column(name = "idempotency_id")
+    private UUID idempotencyId;
 }

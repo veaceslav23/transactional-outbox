@@ -24,9 +24,7 @@ public class DefaultCreateOrderUseCaseImpl implements CreateOrderUseCase {
     @Override
     public UUID createOrder(Order order) {
         var orderId = orders.saveOrder(order);
-        var event = new Event();
-        event.setId(UUID.randomUUID());
-        event.setOrder(order);
+        var event = new Event(UUID.randomUUID(), order);
         try {
             analytics.sendAnalytics(event);
             outbox.saveEvent(event, EventStatus.SUCCESS);

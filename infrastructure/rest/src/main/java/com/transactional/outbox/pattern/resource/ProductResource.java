@@ -21,10 +21,10 @@ public class ProductResource {
         var products = getProductsUseCase.getProducts()
                 .stream()
                 .map(product -> ProductData.builder()
-                        .uuid(product.getUuid())
-                        .price(product.getPrice())
-                        .name(product.getName())
-                        .category(product.getCategory())
+                        .uuid(product.uuid())
+                        .price(product.price())
+                        .name(product.name())
+                        .category(product.category())
                         .build())
                 .toList();
 

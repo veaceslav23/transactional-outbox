@@ -1,38 +1,38 @@
 package com.transactional.outbox.pattern.entity;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Entity
-@Table(name = "t_orders_products")
-@Builder
-@AllArgsConstructor
+@Table(name = "t_order_line")
 @NoArgsConstructor
-public class OrdersProductsEntity {
+@AllArgsConstructor
+@Builder
+public class OrderLineEntity {
 
-    @EmbeddedId
-    private OrdersProductId id;
+    @Id
+    @GeneratedValue
+    private UUID id;
 
     @ManyToOne
-    @MapsId("orderId")
     @JoinColumn(referencedColumnName = "id")
     private OrderEntity order;
 
-    @ManyToOne
-    @MapsId("productId")
-    @JoinColumn(referencedColumnName = "id")
+    @OneToOne
     private ProductEntity product;
 
     @Column
-    private BigDecimal quantity;
+    private BigDecimal price;
 }
