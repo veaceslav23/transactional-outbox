@@ -51,7 +51,7 @@ public class OrderRepositoryAdapter implements Orders {
         return OrderLineEntity.builder()
                 .product(product)
                 .order(orderEntity)
-                .price(orderLine.price())
+                .totalPrice(orderLine.price())
                 .build();
     }
 }
