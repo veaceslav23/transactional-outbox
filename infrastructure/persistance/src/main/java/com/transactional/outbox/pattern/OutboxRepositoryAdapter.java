@@ -28,9 +28,9 @@ public class OutboxRepositoryAdapter implements Outbox {
 
     @Override
     public void saveEvent(Event event, EventStatus eventStatus) {
-        Map<String, Object> orderMap = objectMapper.convertValue(event.getOrder(), Map.class);
+        Map<String, Object> orderMap = objectMapper.convertValue(event.order(), Map.class);
         var outbox = OutboxEntity.builder()
-                .id(event.getId())
+                .id(event.id())
                 .event(orderMap)
                 .status(OutboxStatus.valueOf(eventStatus.name()).name())
                 .createdAt(ZonedDateTime.now())
@@ -40,12 +40,12 @@ public class OutboxRepositoryAdapter implements Outbox {
 
     @Override
     public void updateEvent(Event event, EventStatus eventStatus) {
-        repository.findById(event.getId())
+        repository.findById(event.id())
                 .map(outboxEntity -> {
                     outboxEntity.setStatus(eventStatus.name());
                     return repository.saveAndFlush(outboxEntity);
                 })
-                .orElseThrow(() -> new RuntimeException("Event(%s) not found".formatted(event.getId())));
+                .orElseThrow(() -> new RuntimeException("Event(%s) not found".formatted(event.id())));
     }
 
     @Override
@@ -54,7 +54,10 @@ public class OutboxRepositoryAdapter implements Outbox {
 
         return repository.findBy(outboxExample, FluentQuery.FetchableFluentQuery::all)
                 .stream()
-                .map(outboxEntity -> new Event(outboxEntity.getId(), objectMapper.convertValue(outboxEntity.getEvent(), Order.class)))
-                .toList();
+                .map(outboxEntity -> new Event(
+                        outboxEntity.getId(),
+                        objectMapper.convertValue(outboxEntity.getEvent(),
+                                Order.class))
+                ).toList();
     }
 }

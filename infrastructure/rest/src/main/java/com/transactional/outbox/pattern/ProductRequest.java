@@ -17,9 +17,10 @@ public class ProductRequest {
     private UUID uuid;
     private String name;
     private String category;
-    private BigDecimal price;
+    private BigDecimal pricePerItem;
+    private Integer quantity;
 
     public Product toProduct() {
-        return new Product(uuid, name, Category.valueOf(category), price);
+        return new Product(uuid, name, Category.valueOf(category), pricePerItem);
     }
 }

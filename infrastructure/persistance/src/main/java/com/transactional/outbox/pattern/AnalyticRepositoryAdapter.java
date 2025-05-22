@@ -1,7 +1,7 @@
 package com.transactional.outbox.pattern;
 
 import com.transactional.outbox.pattern.domain.model.Event;
-import com.transactional.outbox.pattern.domain.model.Product;
+import com.transactional.outbox.pattern.domain.model.OrderLine;
 import com.transactional.outbox.pattern.domain.port.Analytics;
 import com.transactional.outbox.pattern.entity.AnalyticEntity;
 import com.transactional.outbox.pattern.repository.AnalyticRepository;
@@ -10,12 +10,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toMap;
 
 @Slf4j
 @Component
@@ -27,13 +27,18 @@ public class AnalyticRepositoryAdapter implements Analytics {
 
     @Override
     public List<UUID> sendAnalytics(Event event) {
-        log.info("Calculating analytics per product for order [{}]", event.getOrder().toString());
-        var products = event.getOrder().getProduct().stream().collect(groupingBy(Product::getUuid, counting()));
+        log.info("Calculating analytics per product for order [{}]", event.order().toString());
+        var products = event.order().orderLines()
+                .stream()
+                .collect(toMap(orderLine -> orderLine.product().uuid(), OrderLine::quantity));
+
         var analytics = products.entrySet().stream()
                 .map((entry) -> productRepository.findById(entry.getKey())
                         .map(productEntity -> AnalyticEntity.builder()
+                                .idempotencyId(event.id())
                                 .product(productEntity)
                                 .quantity(entry.getValue().intValue())
+                                .date(LocalDate.now())
                                 .build())
                         .orElse(null))
                 .filter(Objects::nonNull)

@@ -1,12 +1,10 @@
 package com.transactional.outbox.pattern.domain.model;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
-public record Product(
-        UUID uuid,
-        String name,
-        Category category,
+public record OrderLine(
+        Product product,
+        Integer quantity,
         BigDecimal price
 ) {
 }
